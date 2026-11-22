@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Downloader - Catur K.A</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="topbar"><a href="index.html">← Back</a></div>
+<div class="box"><h2>Downloader 👑</h2><p>Paste link TikTok / IG / YouTube, langsung download.</p>
+<input id="dlLink" placeholder="Paste link disini...">
+<button class="btn" onclick="downloadNow()">DOWNLOAD</button>
+<div class="result" id="dlResult"></div></div>
+<script>
+function downloadNow(){
+  var v=document.getElementById('dlLink').value.trim();
+  if(!v){ document.getElementById('dlResult').innerHTML='Paste link dulu Catur!'; return; }
+  document.getElementById('dlResult').innerHTML='Buka di tab baru, save videonya ya King 👑<br><a href="https://ssstik.io/en?url='+encodeURIComponent(v)+'" target="_blank">👉 Klik Download Disini</a>';
+  window.open('https://ssstik.io/en?url='+encodeURIComponent(v),'_blank');
+}
+</script>
+</body></html>

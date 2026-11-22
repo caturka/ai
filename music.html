@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>King Music - Catur K.A</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="topbar"><a href="index.html">← Back</a></div>
+<div class="box"><h2>King Music 🎵</h2><p>Lagu galau + savage pilihan Catur K.A.</p>
+<input id="cariLagu" placeholder="Cari lagu..." oninput="filterLagu()">
+<div id="listLagu"></div></div>
+<script>
+var lagu=[
+ {judul:"King of My Own World",artis:"Catur K.A",img:"https://i.postimg.cc/5t5xMCyC/IMG-20261122-WA0003(1).jpg",link:"https://open.spotify.com/search/King"},
+ {judul:"Galau Tapi Savage",artis:"Bangcats",img:"https://i.postimg.cc/5t5xMCyC/IMG-20261122-WA0003(1).jpg",link:"https://open.spotify.com/search/galau"},
+ {judul:"Move On King",artis:"Catur K.A",img:"https://i.postimg.cc/5t5xMCyC/IMG-20261122-WA0003(1).jpg",link:"https://open.spotify.com/search/move%20on"}
+];
+function tampil(list){
+  document.getElementById('listLagu').innerHTML=list.map(l=>`<div class="music-item"><img src="${l.img}"><div><b>${l.judul}</b><p>${l.artis}</p></div><button onclick="window.open('${l.link}','_blank')">▶</button></div>`).join('');
+}
+function filterLagu(){
+  var q=document.getElementById('cariLagu').value.toLowerCase();
+  tampil(lagu.filter(l=>l.judul.toLowerCase().includes(q)));
+}
+tampil(lagu);
+</script>
+</body></html>

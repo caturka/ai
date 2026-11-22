@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Stalker Checker - Catur K.A</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="topbar"><a href="index.html">← Back</a></div>
+<div class="box"><h2>Stalker Checker 👀</h2><p>Isi username IG lu, gua cek siapa yang paling sering kepo.</p>
+<input id="stalkUser" placeholder="Username IG tanpa @, contoh: bangcats.id">
+<button class="btn" onclick="cekStalker()">CEK STALKER</button>
+<div class="result" id="stalkResult"></div></div>
+<script>
+function cekStalker(){
+  var u=document.getElementById('stalkUser').value.trim();
+  if(!u){ document.getElementById('stalkResult').innerHTML='Isi username dulu!'; return; }
+  var names=['mantan lu','gebetan lu','tetangga kepo','temen lama','si dia yang belum move on','akun fake'];
+  var n=names[Math.floor(Math.random()*names.length)];
+  var persen=Math.floor(Math.random()*30)+70;
+  document.getElementById('stalkResult').innerHTML='👀 <b>@'+u+'</b><br>Yang paling sering stalking lu: <b>'+n+'</b><br>Level kepo: <b>'+persen+'%</b> 🔥<br><br><i>*Ini buat have fun ya King, jangan baper 😹</i>';
+}
+</script>
+</body></html>
