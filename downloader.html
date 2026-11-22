@@ -1,17 +1,15 @@
-<!DOCTYPE html>
-<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Downloader - Catur K.A</title><link rel="stylesheet" href="style.css"></head>
-<body>
-<div class="topbar"><a href="index.html">← Back</a></div>
-<div class="box"><h2>Downloader 👑</h2><p>Paste link TikTok / IG / YouTube, langsung download.</p>
-<input id="dlLink" placeholder="Paste link disini...">
-<button class="btn" onclick="downloadNow()">DOWNLOAD</button>
-<div class="result" id="dlResult"></div></div>
+<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Downloader - King Bangcats</title><link rel="stylesheet" href="style.css"><style>.box{max-width:500px;margin:60px auto;padding:20px;text-align:center}.box input{width:100%;padding:14px;border-radius:12px;border:1px solid #ddd}.box button{margin-top:12px;width:100%;padding:14px;border:none;border-radius:12px;background:#000;color:#fff;font-weight:800}#hasil{margin-top:20px;text-align:left}#hasil a{display:block;padding:14px;background:#000;color:#fff;border-radius:12px;text-decoration:none;text-align:center;font-weight:800;margin-top:10px}</style></head>
+<body><a href="index.html" style="position:fixed;top:15px;left:15px;text-decoration:none;font-weight:800;color:#000">← Back</a><div class="box"><h1>👑 Downloader</h1><p style="opacity:.6">YT / TikTok / IG - Tanpa Pindah Web!</p><input id="linkInput" placeholder="Paste link disini..."><button onclick="download()">DOWNLOAD 🔥</button><div id="hasil"></div></div>
 <script>
-function downloadNow(){
-  var v=document.getElementById('dlLink').value.trim();
-  if(!v){ document.getElementById('dlResult').innerHTML='Paste link dulu Catur!'; return; }
-  document.getElementById('dlResult').innerHTML='Buka di tab baru, save videonya ya King 👑<br><a href="https://ssstik.io/en?url='+encodeURIComponent(v)+'" target="_blank">👉 Klik Download Disini</a>';
-  window.open('https://ssstik.io/en?url='+encodeURIComponent(v),'_blank');
+async function download(){
+  var url=document.getElementById('linkInput').value.trim(); if(!url) return alert('Masukin link dulu Catur!');
+  var hasil=document.getElementById('hasil'); hasil.innerHTML='Lagi ngambil link... 😹';
+  try{
+    const res=await fetch('/.netlify/functions/download',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url})});
+    const data=await res.json();
+    if(data.url){ hasil.innerHTML=`<video controls playsinline style="width:100%;border-radius:12px;background:#000" src="${data.url}"></video><a href="${data.url}" download>📥 DOWNLOAD VIDEO</a><p style="opacity:.6;font-size:12px">Kalo ga muter, klik DOWNLOAD terus puter pake VLC!</p>`; }
+    else if(data.picker){ hasil.innerHTML=data.picker.map(p=>`<video controls playsinline style="width:100%;border-radius:12px;background:#000;margin-bottom:8px" src="${p.url}"></video><a href="${p.url}" target="_blank">📥 DOWNLOAD ${p.type}</a>`).join(''); }
+    else{ hasil.innerHTML='Gagal! Video private / link salah 😿<br><small>'+JSON.stringify(data).slice(0,200)+'</small>'; }
+  }catch(e){ hasil.innerHTML='Error! Deploy ulang dulu di Netlify!'; }
 }
-</script>
-</body></html>
+</script></body></html>
