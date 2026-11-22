@@ -1,39 +1,19 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catur K.A - King Bangcats</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<div class="card">
-  <img src="https://i.postimg.cc/5t5xMCyC/IMG-20261122-WA0003(1).jpg" class="avatar-img">
-  <h1>Catur K.A</h1>
-  <div class="handle">@bangcats.id</div>
-  <div class="bio">King of My Own World 👑 |<br>Owner: Catur K.A</div>
-</div>
-
-<div class="title">CONNECT WITH ME</div>
-<a class="link" href="https://instagram.com/bangcats.id"><span>@bangcats.id</span><span>→</span></a>
-<a class="link" href="https://instagram.com/__kerass"><span>@__kerass</span><span>→</span></a>
-
-<div class="title">MY PROJECTS</div>
-<a class="link" href="downloader.html"><span>Downloader</span><span>›</span></a>
-<a class="link" href="stalker.html"><span>Stalker Checker</span><span>›</span></a>
-<a class="link" href="music.html"><span>King Music</span><span>›</span></a>
-
-<div class="title">AI KING BANGCATS</div>
-<div class="ai">
-  <div class="ai-head">King Bangcats <span>• AI by Catur K.A • Online</span></div>
-  <div id="aiChat"><div class="bubble">Yo! Gue King Bangcats 👑 Bot-nya Catur K.A. Jangan malu-malu, tanya aja. Gue jawab semua, kecuali utang lu.</div></div>
-  <div class="ai-input">
-    <input id="aiInput" placeholder="Tanya apa aja, jangan malu...">
-    <button onclick="kirimAI()">→</button>
-  </div>
-</div>
-
-<div class="footer">King of My Own World 👑 | Owner: Catur K.A</div>
-<script src="script.js"></script>
-</body>
-</html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>King Bangcats 👑</title><link rel="stylesheet" href="style.css"><style>.menu{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:500px;margin:20px auto;padding:0 16px}.card{background:#111;color:#fff;border-radius:18px;padding:20px;text-align:center;text-decoration:none}.card span{font-size:32px;display:block}.chat{max-width:500px;margin:20px auto;padding:0 16px}.box{background:#f5f5f5;border-radius:18px;padding:14px;height:320px;overflow-y:auto}.msg{padding:10px 12px;border-radius:12px;margin-bottom:8px;max-width:85%}.me{background:#000;color:#fff;margin-left:auto}.bot{background:#fff}.row{display:flex;gap:8px;margin-top:10px}.row input{flex:1;padding:13px;border-radius:12px;border:1px solid #ddd}.row button{padding:13px 18px;border-radius:12px;background:#000;color:#fff;border:none;font-weight:800}</style></head>
+<body><div style="text-align:center;padding:30px 16px 0"><h1 style="font-size:38px">👑 King Bangcats</h1><p style="opacity:.6">Galau? Savage? Download? Semua disini!</p></div>
+<div class="menu"><a class="card" href="music.html"><span>🎵</span><b>King Music</b><br><small>Dengerin Lagu</small></a><a class="card" href="downloader.html"><span>📥</span><b>Downloader</b><br><small>YT / TikTok / IG</small></a></div>
+<div class="chat"><h3>Chat King AI 🤖</h3><div class="box" id="chatBox"><div class="msg bot">Halo Catur! Gua King Bangcats! Mau curhat, nanya, atau minta lagu galau? Gas! 🔥</div></div><div class="row"><input id="chatInput" placeholder="Ketik disini..." onkeydown="if(event.key==='Enter')kirim()"><button onclick="kirim()">KIRIM</button></div></div>
+<script>
+let history=[{role:"system",content:"Kamu adalah King Bangcats, asisten gaul, lucu, savage tapi baik hati, milik Catur K.A dari Semarang. Jawab pake bahasa gaul Indonesia, pake emoji. Singkat, padat, lucu."}];
+async function kirim(){
+  let inp=document.getElementById('chatInput'); let teks=inp.value.trim(); if(!teks) return;
+  let box=document.getElementById('chatBox'); box.innerHTML+=`<div class="msg me">${teks}</div>`; inp.value=''; history.push({role:"user",content:teks});
+  box.innerHTML+=`<div class="msg bot" id="loading">King lagi mikir... 😹</div>`; box.scrollTop=box.scrollHeight;
+  try{
+    const res=await fetch('/.netlify/functions/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history})});
+    const data=await res.json(); document.getElementById('loading').remove();
+    box.innerHTML+=`<div class="msg bot">${data.reply}</div>`; history.push({role:"assistant",content:data.reply});
+  }catch(e){ document.getElementById('loading').remove(); box.innerHTML+=`<div class="msg bot">Waduh error Catur! Netlify belum di deploy ulang / Key belum keset! 😿</div>`; }
+  box.scrollTop=box.scrollHeight;
+}
+</script></body></html>
