@@ -1,23 +1,14 @@
-<!DOCTYPE html>
-<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>King Music - Catur K.A</title><link rel="stylesheet" href="style.css"></head>
-<body>
-<div class="topbar"><a href="index.html">← Back</a></div>
-<div class="box"><h2>King Music 🎵</h2><p>Lagu galau + savage pilihan Catur K.A.</p>
-<input id="cariLagu" placeholder="Cari lagu..." oninput="filterLagu()">
-<div id="listLagu"></div></div>
+<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>King Music</title><link rel="stylesheet" href="style.css"><style>.box{max-width:500px;margin:50px auto 100px;padding:20px}.song{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid #eee;cursor:pointer}.song img{width:60px;height:60px;border-radius:12px;object-fit:cover}.info{flex:1}.play{width:50px;height:50px;border-radius:50%;background:#000;color:#fff;border:none;font-size:18px}.player{position:fixed;bottom:0;left:0;right:0;background:#000;color:#fff;padding:14px;display:none;align-items:center;gap:12px}.player img{width:50px;height:50px;border-radius:10px}</style></head>
+<body><a href="index.html" style="position:fixed;top:15px;left:15px;text-decoration:none;font-weight:800;color:#000">← Back</a><div class="box"><h1>King Music 🎵</h1><p style="opacity:.6">Lagu pilihan Catur K.A.</p><div id="list"></div></div>
+<div class="player" id="player"><img id="pCover"><div style="flex:1"><b id="pJudul"></b><br><span id="pArtis" style="opacity:.6;font-size:13px"></span></div><button class="play" id="pBtn" onclick="toggle()" style="background:#fff;color:#000">⏸️</button><audio id="audio" onended="next()"></audio></div>
 <script>
-var lagu=[
- {judul:"King of My Own World",artis:"Catur K.A",img:"https://i.postimg.cc/5t5xMCyC/IMG-20261122-WA0003(1).jpg",link:"https://open.spotify.com/search/King"},
- {judul:"Galau Tapi Savage",artis:"Bangcats",img:"https://i.postimg.cc/5t5xMCyC/IMG-20261122-WA0003(1).jpg",link:"https://open.spotify.com/search/galau"},
- {judul:"Move On King",artis:"Catur K.A",img:"https://i.postimg.cc/5t5xMCyC/IMG-20261122-WA0003(1).jpg",link:"https://open.spotify.com/search/move%20on"}
+const lagu=[
+ {judul:"King of My Own World",artis:"Catur K.A",cover:"https://i.imgur.com/8zQZ7bQ.jpeg",src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
+ {judul:"Galau Tapi Savage",artis:"Bangcats",cover:"https://i.imgur.com/8zQZ7bQ.jpeg",src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"},
+ {judul:"Move On King",artis:"Catur K.A",cover:"https://i.imgur.com/8zQZ7bQ.jpeg",src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"},
 ];
-function tampil(list){
-  document.getElementById('listLagu').innerHTML=list.map(l=>`<div class="music-item"><img src="${l.img}"><div><b>${l.judul}</b><p>${l.artis}</p></div><button onclick="window.open('${l.link}','_blank')">▶</button></div>`).join('');
-}
-function filterLagu(){
-  var q=document.getElementById('cariLagu').value.toLowerCase();
-  tampil(lagu.filter(l=>l.judul.toLowerCase().includes(q)));
-}
-tampil(lagu);
-</script>
-</body></html>
+let cur=-1; function render(){ document.getElementById('list').innerHTML=lagu.map((l,i)=>`<div class="song" onclick="play(${i})"><img src="${l.cover}"><div class="info"><b>${l.judul}</b><br><span style="opacity:.6">${l.artis}</span></div><button class="play">${cur===i && !document.getElementById('audio').paused?'⏸️':'▶️'}</button></div>`).join(''); }
+function play(i){ cur=i; let a=document.getElementById('audio'); a.src=lagu[i].src; a.play(); document.getElementById('player').style.display='flex'; document.getElementById('pCover').src=lagu[i].cover; document.getElementById('pJudul').innerText=lagu[i].judul; document.getElementById('pArtis').innerText=lagu[i].artis; document.getElementById('pBtn').innerText='⏸️'; render(); }
+function toggle(){ let a=document.getElementById('audio'); if(a.paused){a.play(); document.getElementById('pBtn').innerText='⏸️'}else{a.pause(); document.getElementById('pBtn').innerText='▶️'} render(); }
+function next(){ if(cur<lagu.length-1) play(cur+1); } render();
+</script></body></html>
